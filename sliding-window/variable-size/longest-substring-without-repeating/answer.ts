@@ -10,7 +10,22 @@ import * as fs from "fs";
  * that contains no repeated characters.
  */
 function longestSubstringWithoutRepeating(S: string): number {
-  throw new Error("Not implemented.");
+  const last = new Map<string, number>();
+  let left = 0;
+  let maxLen = 0;
+
+  for (let right = 0; right < S.length; right++) {
+    const ch = S[right];
+
+    if (last.has(ch) && last.get(ch)! >= left) {
+      left = last.get(ch)! + 1;
+    }
+
+    last.set(ch, right);
+    maxLen = Math.max(maxLen, right - left + 1);
+  }
+
+  return maxLen;
 }
 
 // ----------- Standard Input --------------
